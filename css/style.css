@@ -1,0 +1,23 @@
+
+#player_map {
+    height: 96px;
+    width: 96px;
+}
+
+#player_map .column {
+    height: 32px;
+    width: 32px;
+    float: left;
+    font-size: 12px;
+}
+
+#player_map .column div {
+	border: 1px solid #000;
+    height: 31px;
+    width: 31px;
+}
+
+#player_map .column div img{
+	padding: 0;
+	margin: 0;
+}
