@@ -1,7 +1,6 @@
 
 #player_map {
-    height: 96px;
-    width: 96px;
+    border: 1px solid #000;
 }
 
 #player_map .column {
@@ -12,12 +11,16 @@
 }
 
 #player_map .column div {
-	border: 1px solid #000;
-    height: 31px;
-    width: 31px;
+    height: 32px;
+    width: 32px;
 }
 
 #player_map .column div img{
 	padding: 0;
 	margin: 0;
 }
+
+#player_map .column div img.tile_container{	position: absolute;	}
+#player_map .column div img#tile_layer_0{	z-index: 0;	}
+#player_map .column div img#tile_layer_1{	z-index: 1;	}
+#player_map .column div img#tile_layer_2{	z-index: 2;	}
