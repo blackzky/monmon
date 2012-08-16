@@ -14,17 +14,34 @@ var MAP;
 
 $(function(){
 	initMap();
+	$('#tile_options').hide();
 	var coordinate = "";
-	var map_str = "";
-	var value = "";
+	var image = "";
+	var layer = 0 ;
+	var map_x = 0;
+	var map_y = 0;
 	$("div.row div.column div").live('click', function(){
+		$('#tile_options').show();
 		coordinate = ($(this).attr("id")).split(":");
-		value = (prompt("Enter [image]:[layer]")).split(":");
-		MAP[coordinate[0]][coordinate[1]].image = value[0];
-		MAP[coordinate[0]][coordinate[1]].layer = value[1];
-		redrawMap();
-		
+		map_x = coordinate[0];
+		map_y = coordinate[1];
+		$('#tile_options #tile_info').text('Tile options for [X:' + map_x + '][Y:' + map_y + ']');
+		$("#tile_options #tile_image").focus();
 	});
+	
+	$("#set_tile_btn").live('click', function(){
+		image = $("#tile_options #tile_image").val();
+		layer = $("#tile_options #tile_layer").val() * 1;
+		setTile(MAP[map_x][map_y], image, layer);
+		$('#tile_options').hide();
+		redrawMap();
+	});
+	
+	$("#cancel_set_tile_btn").live('click', function(){
+		$('#tile_options').hide();
+	});
+	
+	
 	/*
 	var KEY = {
 		"w" : 87,
@@ -106,9 +123,9 @@ function initMap(){
         MAP[i] = Array(SETTINGS.MAP.MAX_X);
 		for( var j = 0 ; j < SETTINGS.MAP.MAX_X ; j++ ){
 			MAP[i][j] = {
-				image	: "empty",
-				layer 	: 0
-				
+				tile_layer_0	: "empty",
+				tile_layer_1	: "empty",
+				tile_layer_2	: "empty"
 			};
 		}
     }
@@ -121,27 +138,27 @@ function initMap(){
 
 function redrawMap(){
 	var out = '';
-	var prev_tile_0 = $("#tile_layer_0").attr('src');
-	var prev_tile_1 = $("#tile_layer_1").attr('src');
-	var prev_tile_2 = $("#tile_layer_2").attr('src');
 
     for( var i = 0 ; i < SETTINGS.MAP.MAX_Y ; i++ ){
         out += '<div class="row">';
         for( var j = 0 ; j < SETTINGS.MAP.MAX_X ; j++ ){
-			prev_tile_0 = (prev_tile_0 == null) ? 'images/empty.png' : prev_tile_0;
-			prev_tile_1 = (prev_tile_1 == null) ? 'images/empty.png' : prev_tile_1;
-			prev_tile_2 = (prev_tile_2 == null) ? 'images/empty.png' : prev_tile_2;
-			
             out += '<div class="column">' +
             "<div id="+i+":"+j+" class='" + 'empty' + "'>" + 
-			"<img src='" + ((MAP[i][j].layer == 0) ? ('images/' + MAP[i][j].image + '.png') : prev_tile_0) + "' id='tile_layer_0' class='tile_container'></img>" + 
-			"<img src='" + ((MAP[i][j].layer == 1) ? ('images/' + MAP[i][j].image + '.png') : prev_tile_1) + "' id='tile_layer_1' class='tile_container'></img>" + 
-			"<img src='" + ((MAP[i][j].layer == 2) ? ('images/' + MAP[i][j].image + '.png') : prev_tile_2) + "' id='tile_layer_2' class='tile_container'></img>" + 
+			"<img src='images/" + MAP[i][j].tile_layer_0 + ".png' id='tile_layer_0' class='tile_container'></img>" + 
+			"<img src='images/" + MAP[i][j].tile_layer_1 + ".png' id='tile_layer_1' class='tile_container'></img>" + 
+			"<img src='images/" + MAP[i][j].tile_layer_2 + ".png' id='tile_layer_2' class='tile_container'></img>" + 
 			"</div>" +
             '</div>';
         }
         out += '</div>';
     }
     $('#player_map').html(out);
-	
+}
+
+function setTile(map, image, layer){
+	switch(layer){
+			case 0:	map.tile_layer_0 = image;	break;
+			case 1:	map.tile_layer_1 = image;	break;
+			case 2:	map.tile_layer_2 = image;	break;
+		}
 }
