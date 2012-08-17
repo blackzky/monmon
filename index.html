@@ -9,13 +9,19 @@
         <div id='player_map'></div>
 		<div id='tile_options'>
 			<p id="tile_info"></p>
-			Image: <input type="text" id="tile_image" /><br />
-			Layer: <input type="text" id="tile_layer" /><br />
+			Tile: <select id='tile_tile'></select><br />
+			Layer: <select id='tile_layer'></select><br />
 			<button id="set_tile_btn">Set</button>
 			<button id="cancel_set_tile_btn">Cancel</button>
 		</div>
 		<br />
-		<textarea id='map_data'></textarea>
+		<div id='map_options'>
+			<p>Map Options:</p>
+			<textarea id='map_data'></textarea>
+			<br />
+			<button id="import_btn">Import Map</button>
+			<button id="export_btn">Export Map</button>
+		</div>
     </body>
 
     <script src='scripts/jquery-1.7.1.min.js'></script>
