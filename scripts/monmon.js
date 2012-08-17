@@ -84,24 +84,11 @@ function exportMap(){
 	$("#map_options #map_data").val(map_str);
 }
 function importMap(){
-	//alert($("#map_options #map_data").val());
 	var row_str_line = ($("#map_options #map_data").val()).split('|');
 	var col_str_line = "";
 	var tile_str = "";
 	var row_x = 0;
-	/*
-	for(var row_index = 0; row_index < row_str_line.length; row_index++){
-		if (row_str_line[row_index] == '') break;
-		col_str_line = (row_str_line[row_index]).split(',');
-		row_x = row_index % SETTINGS.MAP.MAX_ROW;
-		for(var col_index = 0; col_index < SETTINGS.MAP.MAX_COL; col_index++){
-			tile_str = (col_str_line[col_index]).split(':');
-			setTile(MAP[row_x][col_index], tile_str[1], eval(tile_str[0]));
-		}
-		
-	}
-	*/
-	
+  
 	var col_str = ($("#map_options #map_data").val()).split('|');
 	var layer_str, data_str, row, col, image, layer;
 	var b = 0;
@@ -110,17 +97,13 @@ function importMap(){
 		layer_str = col_str[col_index].split(',');
 		for(layer_index in layer_str){
 			data_str = layer_str[layer_index].split(':');
-			row = col_index - b;
-			col = layer_index;
+			row = parseInt(col_index / 3);
+			col = col_index % 3;
 			layer = data_str[0] * 1;
 			image = data_str[1];
 			
-			alert(row + ":" + col + "|" + layer + ":" + image);
-			//setTile(MAP[row][col], image, layer);
+			setTile(MAP[row][col], image, layer);
 		}
-		if(col_index%3 == 0) b+= 0; else b++;
-		
-		
 	}
 	redrawMap();
 }
